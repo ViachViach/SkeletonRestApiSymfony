@@ -18,5 +18,5 @@ restart:
 build:
 	cp .env.example .env
 	docker-compose up -d --build
-	docker-compose exec clapper-php composer install
+	docker-compose exec clapper-php composer update
 	docker-compose exec clapper-php php bin/console doctrine:migrations:migrate

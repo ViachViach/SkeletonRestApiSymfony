@@ -25,4 +25,6 @@ COPY symfony.ini /usr/local/etc/php/conf.d/symfony.ini
 
 COPY xdebug.ini  /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini
 
+RUN composer self-update --2
+
 WORKDIR /var/www

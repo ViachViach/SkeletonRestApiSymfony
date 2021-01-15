@@ -1,7 +1,7 @@
 version: '3.7'
 services:
-  clapper-db:
-    container_name: clapper-db
+  rest-db:
+    container_name: rest-db
     image: postgres
     restart: always
     ports:
@@ -9,33 +9,33 @@ services:
     volumes:
       - ./docker/pddata:/var/lib/postgresql/data
     environment:
-      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
-      POSTGRES_ROOT_PASSWORD: ${POSTGRES_ROOT_PASSWORD}
-      POSTGRES_DB: ${POSTGRES_DATABASE}
-      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: db_pass
+      POSTGRES_ROOT_PASSWORD: db_pass
+      POSTGRES_DB: db_name
+      POSTGRES_USER: db_user
     networks:
-      - clapper-db
-  clapper-php:
-    container_name: clapper-php-fpm
-    build: ./docker/php-fpm
+      - rest-db
+  rest-php:
+    container_name: rest-php
+    build: ./docker/php
     ports:
       - "9000:9000"
     volumes:
       - ./:/var/www/:cached
     depends_on:
-      - clapper-db
+      - rest-db
     networks:
-      - clapper-db
-      - clapper-php
+      - rest-db
+      - rest-php
   nginx:
-    container_name: clapper-nginx
+    container_name: rest-nginx
     build: docker/nginx
     ports:
       - "88:88"
     depends_on:
-      - clapper-php
+      - rest-php
     networks:
-      - clapper-php
+      - rest-php
     volumes:
       - ./:/var/www/:cached
       - ./docker/logs/nginx-back:/var/log/nginx:cached
@@ -43,5 +43,5 @@ services:
 volumes:
   fias_symfony_database:
 networks:
-  clapper-db:
-  clapper-php:
+  rest-db:
+  rest-php:

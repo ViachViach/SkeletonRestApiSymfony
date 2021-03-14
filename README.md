@@ -1,4 +1,4 @@
-##Launch
+# Launch
 
 Download Docker to your machine.
 
@@ -12,7 +12,7 @@ Execute:
 
 `openssl pkey -in ./config/jwt/private.pem -out config/jwt/public.pem -pubout`
 
-#Backend
+# Backend
 `127.0.0.1:88`
 
 `127.0.0.1:81/api/doc` - Api documentation
